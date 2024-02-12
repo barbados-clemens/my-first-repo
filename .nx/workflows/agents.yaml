@@ -18,9 +18,7 @@ launch-templates:
           # what is the key for the browser cache?
           KEY: 'package-lock.json|yarn.lock|pnpm-lock.yaml'
           # paths are from the workspace root which is ~/workspace so need to go up one level
-          PATHS: |
-            '../.cache/Cypress'
-            '../.cache/ms-playwright'
+          PATHS: '../.cache/Cypress\n../.cache/ms-playwright'
           BASE_BRANCH: 'main'
       - name: Install Node Modules
         uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/install-node-modules/main.yaml'
