@@ -1,0 +1,22 @@
+{
+  "name": "another-e2e",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "another-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "my-first-repo:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "my-first-repo:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
