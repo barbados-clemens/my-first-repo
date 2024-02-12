@@ -23,6 +23,10 @@ launch-templates:
           BASE_BRANCH: 'main'
       - name: Install Node Modules
         uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/install-node-modules/main.yaml'
+      - name: Install Browsers
+        script: |
+          npx playwright install
+          npx cypress install
       - name: Run a custom script
         script: |
           git config --global user.email test@test.com
