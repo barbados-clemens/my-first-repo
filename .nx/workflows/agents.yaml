@@ -2,7 +2,6 @@ launch-templates:
   my-linux-medium-js:
     resourceClass: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.9-v3'
-    env: MY_ENV_VAR=shared
     init-steps:
       - name: Checkout # using a reusable step
         uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/checkout/main.yaml'
@@ -20,13 +19,7 @@ launch-templates:
           BASE_BRANCH: 'main'
       - name: Install Node Modules
         uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/install-node-modules/main.yaml'
-      - name: Run a custom script
-          git config --global user.email test@test.com
-          git config --global user.name "Test Test"
       - name: Setting env # Redefine PATH for further steps
         script: echo "PATH=$HOME/my-folder:$PATH" >> $NX_CLOUD_ENV
       - name: Print path
         script: echo $PATH # will include my-folder
-      - name: Define env var for a step
-        env: MY_ENV_VAR=for-step
-        script: echo $MY_ENV_VAR # will print for-step
