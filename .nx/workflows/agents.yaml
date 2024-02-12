@@ -1,0 +1,37 @@
+launch-templates:
+  my-linux-medium-js:
+    resourceClass: 'docker_linux_amd64/medium'
+    image: 'ubuntu22.04-node20.9-v3'
+    env:
+      MY_ENV_VAR: shared
+    init-steps:
+      - name: Checkout # using a reusable step
+        uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/checkout/main.yaml'
+      - name: Restore Node Modules Cache
+        uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/cache/main.yaml'
+        env:
+          KEY: 'package-lock.json|yarn.lock|pnpm-lock.yaml'
+          PATHS: 'node_modules'
+          BASE_BRANCH: 'main'
+      - name: Restore Browser Cache
+        uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/cache/main.yaml'
+        env:
+          KEY: 'package-lock.json|yarn.lock|pnpm-lock.yaml|"browsers"'
+          PATHS: |
+            '../.cache/Cypress'
+            '../.cache/ms-playwright'
+          BASE_BRANCH: 'main'
+      - name: Install Node Modules
+        uses: 'nrwl/nx-cloud-workflows/v3.1/workflow-steps/install-node-modules/main.yaml'
+      - name: Install Browsers
+        script: |
+          npx playwright install
+          npx cypress install
+      - name: Run a custom script
+        script: |
+          git config --global user.email test@test.com
+          git config --global user.name "Test Test"
+      - name: Setting env # Redefine PATH for further steps
+        script: echo "PATH=$HOME/my-folder:$PATH" >> $NX_CLOUD_ENV
+      - name: Print path
+        script: echo $PATH # will include my-folder

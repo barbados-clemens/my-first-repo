@@ -1,4 +1,5 @@
 {
+  "bust": 1,
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
@@ -39,7 +40,10 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.js"
+      "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/cypress/**/*",
+      "!{projectRoot}/**/*.cy.[jt]s?(x)",
+      "!{projectRoot}/cypress.config.[jt]s"
     ],
     "sharedGlobals": []
   },
